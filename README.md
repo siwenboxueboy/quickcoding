@@ -2,10 +2,17 @@
 
 ### 代码结构
 
-- assert
 - builder
+    - Builder.java 根据字符串/可变长变量构建算法所要求的类型
 - config
+- debug
+    - Recursion.java 用于调试递归,回溯算法,打印输出
 - entity
-  - ListNode.java
-  - TreeNode.java
+    - ListNode.java LeetCode中ListNode类型
+    - TreeNode.java LeetCode中TreeNode类型
+- predicate
+    - Assert.java 断言算法输出是否符合预期
 - print
+    - Console.java 打印输出类
+- template
+    - TrieTree.java 前缀树

@@ -1,7 +1,5 @@
 package com.quickcode.debug;
 
-import com.quickcode.print.Console;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
