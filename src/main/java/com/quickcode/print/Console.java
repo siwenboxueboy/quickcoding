@@ -1,11 +1,10 @@
 package com.quickcode.print;
 
+import com.quickcode.builder.Builder;
 import com.quickcode.entity.ListNode;
 import com.quickcode.entity.TreeNode;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author 王斯博
@@ -95,7 +94,7 @@ public class Console {
             // 树的遍历
             StringBuilder builder = new StringBuilder();
             builder.append("[ ");
-            traverse((TreeNode) obj, builder);
+            bfs((TreeNode) obj, builder);
             builder.append(" ]");
             return builder.toString();
         }
@@ -122,6 +121,33 @@ public class Console {
         if (node == null) return;
         builder.append(node.val).append(" ");
         traverse(node.next, builder);
+    }
+
+    private static void bfs(TreeNode node, StringBuilder builder) {
+        if (node == null) return;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(node);
+        while (!queue.isEmpty()) {
+            TreeNode frontNode = queue.poll();
+            if (frontNode == null) {
+                builder.append("null ");
+                continue;
+            } else {
+                builder.append(frontNode.val).append(" ");
+            }
+            queue.offer(frontNode.left);
+            queue.offer(frontNode.right);
+            boolean canReturn = true;
+            for (TreeNode treeNode : queue) {
+                if (treeNode != null) {
+                    canReturn = false;
+                    break;
+                }
+            }
+            if (canReturn) {
+                return;
+            }
+        }
     }
 
     private static String load(String str, Object... objs) {
