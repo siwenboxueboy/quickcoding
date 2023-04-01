@@ -113,13 +113,13 @@ public class Console {
     private static void traverse(TreeNode node, StringBuilder builder) {
         if (node == null) return;
         traverse(node.left, builder);
-        builder.append(node.val).append(" ");
+        builder.append(node.val).append(", ");
         traverse(node.right, builder);
     }
 
     private static void traverse(ListNode node, StringBuilder builder) {
         if (node == null) return;
-        builder.append(node.val).append(" ");
+        builder.append(node.val).append(", ");
         traverse(node.next, builder);
     }
 
@@ -130,10 +130,10 @@ public class Console {
         while (!queue.isEmpty()) {
             TreeNode frontNode = queue.poll();
             if (frontNode == null) {
-                builder.append("null ");
+                builder.append("null, ");
                 continue;
             } else {
-                builder.append(frontNode.val).append(" ");
+                builder.append(frontNode.val).append(", ");
             }
             queue.offer(frontNode.left);
             queue.offer(frontNode.right);
