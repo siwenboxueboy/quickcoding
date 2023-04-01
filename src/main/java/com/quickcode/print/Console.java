@@ -95,6 +95,7 @@ public class Console {
             StringBuilder builder = new StringBuilder();
             builder.append("[ ");
             bfs((TreeNode) obj, builder);
+            builder.delete(builder.length() - 2, builder.length());
             builder.append(" ]");
             return builder.toString();
         }
@@ -103,6 +104,7 @@ public class Console {
             StringBuilder builder = new StringBuilder();
             builder.append("[ ");
             traverse((ListNode) obj, builder);
+            builder.delete(builder.length() - 2, builder.length() - 1);
             builder.append("]");
             return builder.toString();
         }
