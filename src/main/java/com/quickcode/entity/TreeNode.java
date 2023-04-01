@@ -6,13 +6,24 @@ package com.quickcode.entity;
  */
 public class TreeNode {
     public int val;
+    /**
+     * 当节点表示二叉树时,该属性表示左子树
+     */
     public TreeNode left;
+    /**
+     * 当节点表示二叉树时,该属性表示右子树
+     */
     public TreeNode right;
+
+    /**
+     * 当节点表示多叉树时,该节点表示多叉树孩子节点
+     */
+    public TreeNode[] children;
 
     public TreeNode() {
     }
 
-    public TreeNode(int val) {
+    public  TreeNode(int val) {
         this.val = val;
     }
 

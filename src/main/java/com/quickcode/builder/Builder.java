@@ -2,7 +2,9 @@ package com.quickcode.builder;
 
 import com.quickcode.entity.ListNode;
 import com.quickcode.entity.TreeNode;
+import com.quickcode.print.Console;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,17 +93,37 @@ public class Builder {
     }
 
     public static TreeNode buildTreeNode(Integer... values) {
-        return buildTreeNode(values, 0);
+        ArrayList<Integer> valueList = new ArrayList<>(values.length);
+        for (Integer value : values) {
+            valueList.add(value);
+        }
+        return buildTreeNode(valueList, 0);
     }
 
     // 完全二叉树构造方法
-    private static TreeNode buildTreeNode(Integer[] values, int index) {
-        if (index >= values.length || values[index] == null) return null;
-        TreeNode treeNode = new TreeNode(values[index]);
+    private static TreeNode buildTreeNode(ArrayList<Integer> valueList, int index) {
+        if (index >= valueList.size()) return null;
+        Integer value = valueList.get(index);
+        // 为什么要这样优化？
+        //
+        if (value == null) {
+            // 要加入子节点的null值 确保有空间容纳 不然会指针越界异常
+            valueList.ensureCapacity(valueList.size() + 2);
+            int left = 2 * index + 1;
+            if (left < valueList.size()) {
+                valueList.add(left, null);
+            }
+            int right = left + 1;
+            if (right < valueList.size()) {
+                valueList.add(right, null);
+            }
+            return null;
+        }
+        TreeNode treeNode = new TreeNode(value);
         // 左子树
-        treeNode.left = buildTreeNode(values, 2 * index + 1);
+        treeNode.left = buildTreeNode(valueList, 2 * index + 1);
         // 右子树
-        treeNode.right = buildTreeNode(values, 2 * index + 2);
+        treeNode.right = buildTreeNode(valueList, 2 * index + 2);
         return treeNode;
     }
 

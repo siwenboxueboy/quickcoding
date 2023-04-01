@@ -32,6 +32,10 @@ public class Console {
     //background Code
     // ...
 
+    public static void log() {
+
+    }
+
     /**
      * 数组,集合类型,基本类型的输出
      *
