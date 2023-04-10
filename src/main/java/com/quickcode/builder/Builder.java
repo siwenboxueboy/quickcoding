@@ -5,6 +5,7 @@ import com.quickcode.entity.TreeNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,14 +20,14 @@ public class Builder {
 
     /**
      * 占用空间少
-     * */
+     */
     public static List<Integer>[] graphList(int size) {
         return new List[size];
     }
 
     /**
      * 可快速判断两个节点是否相邻
-     * */
+     */
     public static boolean[][] graphArray(int size) {
         return new boolean[size][size];
     }
@@ -36,29 +37,68 @@ public class Builder {
      */
     public static int[][] buildDimensionalIntsArray(String str) {
         if (str.indexOf("[[") >= 0) {
-            str = str.substring(2, str.length() - 2);
+            str = str.substring(1);
         }
-        String[] splitStr = str.split("],\\[");
-        int[][] res = new int[splitStr.length][];
-        for (int i = 0; i < splitStr.length; i++) {
-            res[i] = buildInt(splitStr[i]);
+        if (str.indexOf("]]") > 0) {
+            str = str.substring(0, str.length() - 1);
+        }
+        List<int[]> values = new ArrayList<>();
+        StringBuilder builder = new StringBuilder();
+        char[] chars = str.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if ('[' == chars[i]) {
+                builder.delete(0, builder.length());
+                builder.append(chars[i]);
+            } else if (']' == chars[i]) {
+                builder.append(chars[i]);
+                String s = builder.toString();
+                int[] value = buildInt(s);
+                values.add(value);
+            } else {
+                builder.append(chars[i]);
+            }
+        }
+        int[][] res = new int[values.size()][];
+        for (int i = 0; i < values.size(); i++) {
+            res[i] = values.get(i);
         }
         return res;
     }
 
     public static char[][] buildDimensionalCharsArray(String str) {
-        if (str.indexOf("[[\"") >= 0) {
-            str = str.substring(3, str.length() - 3);
+        if (str.indexOf("[[") >= 0) {
+            str = str.substring(1);
         }
-        String[] splitStr = str.split("\"],\\[\"");
-        char[][] res = new char[splitStr.length][];
-        for (int i = 0; i < splitStr.length; i++) {
-            res[i] = buildChar(splitStr[i]);
+        if (str.indexOf("]]") > 0) {
+            str = str.substring(0, str.length() - 1);
+        }
+        List<char[]> values = new ArrayList<>();
+        StringBuilder builder = new StringBuilder();
+        char[] chars = str.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if ('[' == chars[i]) {
+                builder.delete(0, builder.length());
+                builder.append(chars[i]);
+            } else if (']' == chars[i]) {
+                builder.append(chars[i]);
+                String s = builder.toString();
+                char[] value = buildChar(s);
+                values.add(value);
+            } else {
+                builder.append(chars[i]);
+            }
+        }
+        char[][] res = new char[values.size()][];
+        for (int i = 0; i < values.size(); i++) {
+            res[i] = values.get(i);
         }
         return res;
     }
 
     public static List<String> buildList(String str) {
+        if ("[]".equals(str)) {
+            return Collections.emptyList();
+        }
         if (str.indexOf("[\"") >= 0) {
             str = str.substring(2, str.length() - 2);
         }
@@ -67,6 +107,9 @@ public class Builder {
     }
 
     public static char[] buildChar(String str) {
+        if ("[]".equals(str)) {
+            return new char[0];
+        }
         if (str.indexOf("[\"") >= 0) {
             str = str.substring(2, str.length() - 2);
         }
@@ -81,8 +124,14 @@ public class Builder {
     }
 
     public static int[] buildInt(String str) {
+        if ("[]".equals(str)) {
+            return new int[0];
+        }
         if (str.indexOf('[') >= 0) {
-            str = str.substring(1, str.length() - 1);
+            str = str.substring(1);
+        }
+        if (str.indexOf(']') >= 0) {
+            str = str.substring(0, str.length() - 1);
         }
         String[] split = str.split(",");
         int[] ints = Arrays.stream(split).mapToInt(Integer::valueOf).toArray();
