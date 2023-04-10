@@ -2,7 +2,6 @@ package com.quickcode.builder;
 
 import com.quickcode.entity.ListNode;
 import com.quickcode.entity.TreeNode;
-import com.quickcode.print.Console;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +15,20 @@ import java.util.stream.Collectors;
 public class Builder {
 
     private Builder() {
+    }
+
+    /**
+     * 占用空间少
+     * */
+    public static List<Integer>[] graphList(int size) {
+        return new List[size];
+    }
+
+    /**
+     * 可快速判断两个节点是否相邻
+     * */
+    public static boolean[][] graphArray(int size) {
+        return new boolean[size][size];
     }
 
     /**
